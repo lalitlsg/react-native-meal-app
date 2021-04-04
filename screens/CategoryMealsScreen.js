@@ -1,7 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
-import MealItem from "../components/MealItem";
+import MealList from "../components/MealList";
 import { CATEGORIES, MEALS } from "../data/data";
 
 const CategoryMealsScreen = (props) => {
@@ -10,21 +8,7 @@ const CategoryMealsScreen = (props) => {
     (meal) => meal.categoryIds.indexOf(categoryId) >= 0
   );
 
-  const renderMeal = (dataItem) => (
-    <MealItem
-      meal={dataItem}
-      onSelectMeal={() => {
-        props.navigation.navigate({
-          routeName: "MealDetail",
-          params: {
-            mealId: dataItem.item.id,
-          },
-        });
-      }}
-    />
-  );
-
-  return <FlatList data={displayMeals} renderItem={renderMeal} />;
+  return <MealList displayMeals={displayMeals} navigation={props.navigation} />;
 };
 
 CategoryMealsScreen.navigationOptions = (navigationData) => {
@@ -36,13 +20,5 @@ CategoryMealsScreen.navigationOptions = (navigationData) => {
     headerTitle: categoryTitle,
   };
 };
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: "center",
-    alignContent: "center",
-  },
-});
 
 export default CategoryMealsScreen;

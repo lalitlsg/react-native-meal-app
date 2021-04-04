@@ -20,7 +20,7 @@ MealDetailScreen.navigationOptions = (navigationData) => {
   const { title } = MEALS.find((meal) => meal.id === mealId);
   return {
     headerTitle: title,
-    headerRight: (
+    headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButtons}>
         <Item
           title="Fav"
