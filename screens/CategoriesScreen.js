@@ -11,7 +11,14 @@ import { CATEGORIES } from "../data/categories-data";
 const CategoriesScreen = (props) => {
   const renderGridCategories = (dataItem) => (
     <TouchableNativeFeedback
-      onPress={() => props.navigation.navigate("CategoryMeals")}
+      onPress={() =>
+        props.navigation.navigate({
+          routeName: "CategoryMeals",
+          params: {
+            categoryId: dataItem.item.id,
+          },
+        })
+      }
     >
       <View style={styles.category}>
         <AppText>{dataItem.item.title}</AppText>
@@ -26,6 +33,10 @@ const CategoriesScreen = (props) => {
       renderItem={renderGridCategories}
     />
   );
+};
+
+CategoriesScreen.navigationOptions = {
+  headerTitle: "Meal Categories",
 };
 
 const styles = StyleSheet.create({
