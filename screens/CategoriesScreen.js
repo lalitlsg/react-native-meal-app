@@ -1,17 +1,14 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  TouchableNativeFeedback,
-} from "react-native";
-import AppText from "../components/AppText";
-import { CATEGORIES } from "../data/categories-data";
+import { StyleSheet, FlatList } from "react-native";
+import CategoryGridItem from "../components/CategoryGridItem";
+import { CATEGORIES } from "../data/data";
 
 const CategoriesScreen = (props) => {
   const renderGridCategories = (dataItem) => (
-    <TouchableNativeFeedback
-      onPress={() =>
+    <CategoryGridItem
+      title={dataItem.item.title}
+      color={dataItem.item.color}
+      onSelect={() =>
         props.navigation.navigate({
           routeName: "CategoryMeals",
           params: {
@@ -19,11 +16,7 @@ const CategoriesScreen = (props) => {
           },
         })
       }
-    >
-      <View style={styles.category}>
-        <AppText>{dataItem.item.title}</AppText>
-      </View>
-    </TouchableNativeFeedback>
+    />
   );
 
   return (
@@ -35,10 +28,6 @@ const CategoriesScreen = (props) => {
   );
 };
 
-CategoriesScreen.navigationOptions = {
-  headerTitle: "Meal Categories",
-};
-
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -46,11 +35,6 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: "center",
-  },
-  category: {
-    flex: 1,
-    height: 100,
-    margin: 15,
   },
 });
 
