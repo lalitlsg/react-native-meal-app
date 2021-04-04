@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import AppText from "../components/AppText";
 
 const MealDetailScreen = () => {
   return (
     <View style={styles.screen}>
-      <Text>MealDetailScreen</Text>
+      <AppText>MealDetailScreen</AppText>
     </View>
   );
 };

@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import AppText from "../components/AppText";
 
 const FilterScreen = () => {
   return (
     <View style={styles.screen}>
-      <Text>FilterScreen</Text>
+      <AppText>FilterScreen</AppText>
     </View>
   );
 };
