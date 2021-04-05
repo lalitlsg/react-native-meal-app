@@ -22,9 +22,6 @@ const MealsNavigator = createStackNavigator({
 const FavoriteNavigator = createStackNavigator({
   Favorite: {
     screen: FavoriteScreen,
-    navigationOptions: {
-      headerTitle: "Your Favorites",
-    },
   },
   MealDetail: MealDetailScreen,
 });
