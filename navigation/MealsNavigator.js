@@ -11,47 +11,92 @@ import MealDetailScreen from "../screens/MealDetailScreen";
 import FavoriteScreen from "../screens/FavoriteScreen";
 import FilterScreen from "../screens/FilterScreen";
 
-const MealsNavigator = createStackNavigator({
-  Categories: {
-    screen: CategoriesScreen,
+const defaultStackNavOptions = {
+  headerTitleStyle: {
+    fontFamily: "open-sans-pro",
   },
-  CategoryMeals: CategoryMealsScreen,
-  MealDetail: MealDetailScreen,
-});
+};
 
-const FavoriteNavigator = createStackNavigator({
-  Favorite: {
-    screen: FavoriteScreen,
+const MealsNavigator = createStackNavigator(
+  {
+    Categories: {
+      screen: CategoriesScreen,
+    },
+    CategoryMeals: CategoryMealsScreen,
+    MealDetail: MealDetailScreen,
   },
-  MealDetail: MealDetailScreen,
-});
+  {
+    defaultNavigationOptions: defaultStackNavOptions,
+  }
+);
 
-const FilterNavigator = createStackNavigator({
-  Filter: FilterScreen,
-});
+const FavoriteNavigator = createStackNavigator(
+  {
+    Favorite: {
+      screen: FavoriteScreen,
+    },
+    MealDetail: MealDetailScreen,
+  },
+  {
+    defaultNavigationOptions: defaultStackNavOptions,
+  }
+);
 
-const MealFavTabNavigator = createBottomTabNavigator({
-  Meals: {
-    screen: MealsNavigator,
-    navigationOptions: {
-      tabBarIcon: (tabInfo) => (
-        <Ionicons name="ios-restaurant" size={24} color={tabInfo.tintColor} />
-      ),
+const FilterNavigator = createStackNavigator(
+  {
+    Filter: FilterScreen,
+  },
+  {
+    defaultNavigationOptions: defaultStackNavOptions,
+  }
+);
+
+const MealFavTabNavigator = createBottomTabNavigator(
+  {
+    Meals: {
+      screen: MealsNavigator,
+      navigationOptions: {
+        tabBarIcon: (tabInfo) => (
+          <Ionicons name="ios-restaurant" size={24} color={tabInfo.tintColor} />
+        ),
+      },
+    },
+    Favorites: {
+      screen: FavoriteNavigator,
+      navigationOptions: {
+        tabBarIcon: (tabInfo) => (
+          <Ionicons name="ios-star" size={24} color={tabInfo.tintColor} />
+        ),
+      },
     },
   },
-  Favorites: {
-    screen: FavoriteNavigator,
-    navigationOptions: {
-      tabBarIcon: (tabInfo) => (
-        <Ionicons name="ios-star" size={24} color={tabInfo.tintColor} />
-      ),
+  {
+    tabBarOptions: {
+      labelStyle: {
+        fontFamily: "open-sans-pro",
+        fontSize: 13,
+      },
     },
-  },
-});
+  }
+);
 
-const MainNavigator = createDrawerNavigator({
-  MealsFav: MealFavTabNavigator,
-  Filters: FilterNavigator,
-});
+const MainNavigator = createDrawerNavigator(
+  {
+    MealsFav: {
+      screen: MealFavTabNavigator,
+      navigationOptions: {
+        drawerLabel: "Meals",
+      },
+    },
+    Filters: FilterNavigator,
+  },
+  {
+    contentOptions: {
+      labelStyle: {
+        fontFamily: "open-sans-pro",
+      },
+    },
+  }
+);
 
 export default createAppContainer(MainNavigator);
