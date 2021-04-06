@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useCallback } from "react";
 import { View, StyleSheet, Image, ScrollView } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import AppText from "../components/AppText";
 import CustomHeaderButtons from "../components/CustomHeaderButtons";
+import { toggleFavorite } from "../store/actions/meals";
 
 const Title = ({ children }) => (
   <View style={styles.titleContainer}>
@@ -21,8 +22,24 @@ const ItemList = ({ children }) => (
 const MealDetailScreen = (props) => {
   const mealId = props.navigation.getParam("mealId");
   const availableMeals = useSelector((state) => state.meals.meals);
+  const isFavoriteMeal = useSelector((state) =>
+    state.meals.favoriteMeals.some((meal) => meal.id === mealId)
+  );
+  const dispatch = useDispatch();
+
+  const toggleFavoriteHandler = useCallback(() => {
+    dispatch(toggleFavorite(mealId));
+  }, [mealId, dispatch]);
+
+  useEffect(() => {
+    props.navigation.setParams({ toggleFav: toggleFavoriteHandler });
+  }, [toggleFavoriteHandler]);
+
+  useEffect(() => {
+    props.navigation.setParams({ isFavorite: isFavoriteMeal });
+  }, [isFavoriteMeal]);
+
   const {
-    title,
     imageUrl,
     duration,
     complexity,
@@ -57,16 +74,16 @@ const MealDetailScreen = (props) => {
 
 MealDetailScreen.navigationOptions = (navigationData) => {
   const title = navigationData.navigation.getParam("mealTitle");
+  const toggleFav = navigationData.navigation.getParam("toggleFav");
+  const isFavorite = navigationData.navigation.getParam("isFavorite");
   return {
     headerTitle: title,
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButtons}>
         <Item
           title="Fav"
-          iconName="ios-star"
-          onPress={() => {
-            console.log("Fav");
-          }}
+          iconName={isFavorite ? "ios-star" : "ios-star-outline"}
+          onPress={toggleFav}
         />
       </HeaderButtons>
     ),
