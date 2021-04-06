@@ -1,11 +1,10 @@
 import React from "react";
 import { View, StyleSheet, Image, ScrollView } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import App from "../App";
+import { useSelector } from "react-redux";
 
 import AppText from "../components/AppText";
 import CustomHeaderButtons from "../components/CustomHeaderButtons";
-import { MEALS } from "../data/data";
 
 const Title = ({ children }) => (
   <View style={styles.titleContainer}>
@@ -21,14 +20,17 @@ const ItemList = ({ children }) => (
 
 const MealDetailScreen = (props) => {
   const mealId = props.navigation.getParam("mealId");
+  const availableMeals = useSelector((state) => state.meals.meals);
   const {
+    title,
     imageUrl,
     duration,
     complexity,
     affordability,
     ingredients,
     steps,
-  } = MEALS.find((meal) => meal.id === mealId);
+  } = availableMeals.find((meal) => meal.id === mealId);
+
   return (
     <ScrollView style={styles.screen}>
       <Image source={{ uri: imageUrl }} style={styles.image} />
@@ -54,8 +56,7 @@ const MealDetailScreen = (props) => {
 };
 
 MealDetailScreen.navigationOptions = (navigationData) => {
-  const mealId = navigationData.navigation.getParam("mealId");
-  const { title } = MEALS.find((meal) => meal.id === mealId);
+  const title = navigationData.navigation.getParam("mealTitle");
   return {
     headerTitle: title,
     headerRight: () => (

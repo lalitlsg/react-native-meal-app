@@ -1,17 +1,14 @@
 import React from "react";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import CustomHeaderButtons from "../components/CustomHeaderButtons";
+import { useSelector } from "react-redux";
 
+import CustomHeaderButtons from "../components/CustomHeaderButtons";
 import MealList from "../components/MealList";
-import { MEALS } from "../data/data";
 
 const FavoriteScreen = (props) => {
-  const favoritesMeals = MEALS.filter(
-    (meal) => meal.id === "m1" || meal.id === "m2"
-  );
-
+  const favoriteMeals = useSelector((state) => state.meals.favoriteMeals);
   return (
-    <MealList displayMeals={favoritesMeals} navigation={props.navigation} />
+    <MealList displayMeals={favoriteMeals} navigation={props.navigation} />
   );
 };
 
